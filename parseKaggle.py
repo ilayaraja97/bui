@@ -2,15 +2,15 @@ import pandas as pd
 import numpy as np
 
 
-def parse_amazon():
-    data = pd.read_json("data/amazon.json", lines=True)
+def parse_kaggle():
+    data = pd.read_csv("data/kaggle.csv")
     # print(data.describe())
 
-    # print(data["reviewText"])
-    # print(data["overall"])
+    # print(data["Review Text"])
+    # print(data["Rating"])
 
-    x_train = np.copy(data["reviewText"])
-    y_train = np.divide(data["overall"], 5)
+    x_train = np.copy(data["Review Text"])
+    y_train = np.divide(data["Rating"], 5)
 
     # df = pd.DataFrame(y_train)
     # # print(df)
@@ -19,7 +19,7 @@ def parse_amazon():
 
 
 def main():
-    parse_amazon()
+    parse_kaggle()
 
 
 if __name__ == "__main__":

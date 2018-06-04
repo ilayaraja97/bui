@@ -15,7 +15,7 @@ def parse_amazon():
     # df = pd.DataFrame(y_train)
     # # print(df)
     # print(np.divide(df["overall"].value_counts(), 2786.77))
-    return x_train, y_train
+    return x_train,y_train
 
 
 def main():

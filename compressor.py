@@ -4,13 +4,14 @@ from keras.utils import to_categorical
 import numpy as np
 
 def compressEmbedding(embedding_index, data):
+    print ("compress Embedding")
     MAX_SEQUENCE_LENGTH = 250
     # MAX_NB_WORDS = 72000
-    print(data)
-    print(embedding_index)
+
     tokenizer = Tokenizer()
-    tokenizer.fit_on_texts(data.X)
-    sequences = tokenizer.texts_to_sequences(data.X)
+    # print(np.copy(data[0]).shape)
+    tokenizer.fit_on_texts(np.copy(data[0]))
+    sequences = tokenizer.texts_to_sequences(data[0])
 
     word_index = tokenizer.word_index
     print('Found %s unique tokens.' % len(word_index))
@@ -18,8 +19,8 @@ def compressEmbedding(embedding_index, data):
     print('Example sequence ', sequences[1])
 
     #get a 2D numpy array of input and output
-    data.X = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
-    data.y = to_categorical(np.asarray(data.y))
+    x = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
+    y = to_categorical(np.asarray(data[1]))
 
     EMBEDDING_DIM = 50
     embedding_matrix = np.zeros((len(word_index) + 1, EMBEDDING_DIM))
@@ -30,6 +31,6 @@ def compressEmbedding(embedding_index, data):
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
 
-    print(len(embedding_matrix), " ", embedding_matrix[word_index.get('and')])
+    #print(len(embedding_matrix), " ", embedding_matrix[word_index.get('and')])
 
-    return word_index,data,embedding_matrix
+    return word_index,(x,y),embedding_matrix

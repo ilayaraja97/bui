@@ -8,11 +8,11 @@ def splitData(data, split_value=0.5):
         split_value is fraction of samples used for validation set
     """
 
-    indices = np.arange(data.X.shape[0])
+    indices = np.arange(data[0].shape[0])
     np.random.shuffle(indices)
 
-    X = data.X[indices]
-    y = data.y[indices]
+    X = data[0][indices]
+    y = data[1][indices]
     nb_validation_samples = int(split_value * X.shape[0])
 
     x_train = X[:-nb_validation_samples]

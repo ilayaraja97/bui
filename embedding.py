@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def getGloVeModel(file):
     embedding_index = {}
 

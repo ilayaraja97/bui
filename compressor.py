@@ -20,8 +20,8 @@ def compressEmbedding(embedding_index, data):
 
     #get a 2D numpy array of input and output
     x = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
-    y = to_categorical(np.asarray(data[1]))
-
+    y = data[1]
+    print(y.shape)
     EMBEDDING_DIM = 50
     embedding_matrix = np.zeros((len(word_index) + 1, EMBEDDING_DIM))
 

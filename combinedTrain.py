@@ -1,4 +1,3 @@
-from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, SpatialDropout1D, SimpleRNN, GRU, LSTM
 import numpy as np
@@ -15,7 +14,7 @@ def save_model(model, index=""):
 
 epochs = 50
 max_features = 20000
-maxlen = 250  # cut texts after this number of words (among top max_features most common words)
+max_len = 250  # cut texts after this number of words (among top max_features most common words)
 batch_size = 128
 
 print('Loading data...')
@@ -28,8 +27,8 @@ print('Loading data...')
 # print(len(x_test), 'test sequences')
 # print(x_train[1])
 # print('Pad sequences (samples x time)')
-# x_train = sequence.pad_sequences(x_train, maxlen=maxlen)
-# x_test = sequence.pad_sequences(x_test, maxlen=maxlen)
+# x_train = sequence.pad_sequences(x_train, max_len=max_len)
+# x_test = sequence.pad_sequences(x_test, max_len=max_len)
 print('x_train shape:', x_train.shape)
 print('x_test shape:', x_test.shape)
 print('y_train shape:', y_train.shape)
@@ -43,7 +42,7 @@ print('Build model RNN...')
 
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), len(embedding_matrix[0]), weights=[embedding_matrix], trainable=False,
-                    input_length=maxlen))
+                    input_length=max_len))
 model.add(SpatialDropout1D(0.2))
 model.add(SimpleRNN(256, dropout=0.2))
 model.add(Dense(1, activation='sigmoid'))
@@ -70,7 +69,7 @@ print('Build model GRU...')
 
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), len(embedding_matrix[0]), weights=[embedding_matrix], trainable=False,
-                    input_length=maxlen))
+                    input_length=max_len))
 model.add(SpatialDropout1D(0.2))
 model.add(GRU(256, dropout=0.2, recurrent_dropout=0.2))
 model.add(Dense(1, activation='sigmoid'))
@@ -98,7 +97,7 @@ print('Build model LSTM...')
 
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), len(embedding_matrix[0]), weights=[embedding_matrix], trainable=False,
-                    input_length=maxlen))
+                    input_length=max_len))
 model.add(SpatialDropout1D(0.2))
 model.add(LSTM(256, dropout=0.2, recurrent_dropout=0.2))
 model.add(Dense(1, activation='sigmoid'))

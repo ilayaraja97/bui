@@ -3,17 +3,13 @@ import re
 
 import numpy as np
 from keras.models import model_from_json
-from keras.preprocessing import sequence
-from keras.preprocessing.text import text_to_word_sequence
-
-from models import getEmbedding
 
 
-def getIdMatrixFromSentences(vocab, data, maxSeqLength):
-    ids = np.zeros([len(data), maxSeqLength], dtype=int)
+def get_encoded_matrix(vocab, data, max_seq_length):
+    ids = np.zeros([len(data), max_seq_length], dtype=int)
     for i, sentence in enumerate(data):
         for j, word in enumerate(re.split("[ !\"#$%&*+,-./:;<=>?@^_`{|}~\t\n']", sentence)):
-            if j == maxSeqLength:
+            if j == max_seq_length:
                 break
             if word.lower() in vocab:
                 # print(word)
@@ -38,7 +34,7 @@ with open('data/word_index.json') as f:
     word_index = json.load(f)
 
 # print(word_index)
-x = getIdMatrixFromSentences(dict(word_index), np.copy([a]), 250)
+x = get_encoded_matrix(dict(word_index), np.copy([a]), 250)
 # print(x)
 b = model.predict(x, batch_size=1, verbose=0)
 

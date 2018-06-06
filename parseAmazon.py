@@ -3,20 +3,21 @@ import numpy as np
 
 
 def parse_amazon():
+    # read the reviews from amazon.json and we get a dataframe
     data = pd.read_json("data/amazon.json", lines=True)
-    # print(data.loc[data["overall"] == 1])
+
+    # in data["overall"], the rating is given for each corresponding index in data["reviewText"]
+    # 1 means negative reponse and 5 means positive response
     neg = data.loc[data["overall"] == 1]
     pos = data.loc[data["overall"] == 5][0:neg.shape[0]]
 
-    # print(neg["reviewText"])
-    # print(neg["overall"])
-
+    # parse it into numpy array and store the reviewText in x_train and the rating in y_train
     x_train = np.copy(neg["reviewText"])
     x_train = np.append(x_train, np.copy(pos["reviewText"]))
-    # 3 -> 0, 4 -> 1
     y_train = np.subtract(neg["overall"], 1)
     y_train = np.append(y_train, np.subtract(pos["overall"], 4))
 
+    # another way of performing the above
     # x_train = []
     # y_train = []
     # i = 0
@@ -35,17 +36,12 @@ def parse_amazon():
     # x_train = np.copy(x_train).transpose()
     # y_train = np.copy(y_train).transpose()
     #
-    #
-    # # x_train = np.copy(data["reviewText"])
-    # # # 3 -> 0, 4 -> 1
-    # # y_train = np.round(np.divide(data["overall"], 7))
-    # # y_train = np.copy(data["overall"])
-    # # print(x_train)
-    # # print(y_train)
     # df = pd.DataFrame(y_train)
     # # print(df.describe())
-    # #
     # print(np.divide(df[0].value_counts(), 1))  # 2786.77))
+
+    print(x_train)
+    print(y_train)
     return x_train, y_train
 
 

@@ -22,13 +22,6 @@ print('Loading data...')
 # loads data from keras.datasets imdb
 (x_train, y_train), (x_test, y_test) = (np.load("data/x_train.npy"), np.load("data/y_train.npy")) \
     , (np.load("data/x_val.npy"), np.load("data/y_val.npy"))
-# (x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)
-# print(len(x_train), 'train sequences')
-# print(len(x_test), 'test sequences')
-# print(x_train[1])
-# print('Pad sequences (samples x time)')
-# x_train = sequence.pad_sequences(x_train, max_len=max_len)
-# x_test = sequence.pad_sequences(x_test, max_len=max_len)
 print('x_train shape:', x_train.shape)
 print('x_test shape:', x_test.shape)
 print('y_train shape:', y_train.shape)

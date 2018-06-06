@@ -1,23 +1,9 @@
 import json
-import re
 
 import numpy as np
 from keras.models import model_from_json
 
-
-def get_encoded_matrix(vocab, data, max_seq_length):
-    ids = np.zeros([len(data), max_seq_length], dtype=int)
-    for i, sentence in enumerate(data):
-        for j, word in enumerate(re.split("[ !\"#$%&*+,-./:;<=>?@^_`{|}~\t\n']", sentence)):
-            if j == max_seq_length:
-                break
-            if word.lower() in vocab:
-                # print(word)
-                ids[i][j] = vocab.get(word.lower())
-            else:
-                ids[i][j] = 0
-    return ids
-
+from cleanAmazon import get_encoded_matrix
 
 json_file = open('data/model-amazon-gru.json', 'r')
 loaded_model_json = json_file.read()

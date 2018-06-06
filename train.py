@@ -1,6 +1,6 @@
 from keras.preprocessing import sequence
 from keras.models import Sequential
-from keras.layers import Dense, Embedding, SpatialDropout1D
+from keras.layers import Dense, Embedding, SpatialDropout1D, SimpleRNN
 from keras.layers import LSTM
 from keras.datasets import imdb
 import numpy as np
@@ -44,7 +44,7 @@ model = Sequential()
 model.add(Embedding(len(embedding_matrix), len(embedding_matrix[0]), weights=[embedding_matrix], trainable=False,
                     input_length=maxlen))
 model.add(SpatialDropout1D(0.2))
-model.add(LSTM(256, dropout=0.2, recurrent_dropout=0.2))
+model.add(SimpleRNN(256, dropout=0.2))
 model.add(Dense(1, activation='sigmoid'))
 
 # try using different optimizers and different optimizer configs

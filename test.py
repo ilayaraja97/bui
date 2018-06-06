@@ -26,6 +26,7 @@ model = model_from_json(loaded_model_json)
 
 # load weights into new model
 model.load_weights('data/model-amazon-gru.h5')
+print(model.summary())
 print("loaded")
 
 a = str(input())

@@ -3,8 +3,9 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
 import numpy as np
 
+
 def compressEmbedding(embedding_index, data):
-    print ("compress Embedding")
+    print("compress Embedding")
     MAX_SEQUENCE_LENGTH = 250
     # MAX_NB_WORDS = 72000
 
@@ -15,10 +16,10 @@ def compressEmbedding(embedding_index, data):
 
     word_index = tokenizer.word_index
     print('Found %s unique tokens.' % len(word_index))
-    print('Example word index ' , word_index.get('the'))
-    print('Example sequence ', sequences[1])
+    print('Example word index ', word_index.get('the'))
+    print('Example sequence ', sequences[0])
 
-    #get a 2D numpy array of input and output
+    # get a 2D numpy array of input and output
     x = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
     y = data[1]
     print(y.shape)
@@ -31,6 +32,6 @@ def compressEmbedding(embedding_index, data):
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
 
-    #print(len(embedding_matrix), " ", embedding_matrix[word_index.get('and')])
+    # print(len(embedding_matrix), " ", embedding_matrix[word_index.get('and')])
 
-    return word_index,(x,y),embedding_matrix
+    return word_index, (x, y), embedding_matrix

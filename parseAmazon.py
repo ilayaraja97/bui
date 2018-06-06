@@ -4,19 +4,23 @@ import numpy as np
 
 def parse_amazon():
     data = pd.read_json("data/amazon.json", lines=True)
-    data = data[:][:10000]
-    # print(data.describe())
+    # print(data.loc[data["overall"] == 1])
+    neg = data.loc[data["overall"] == 1]
+    pos = data.loc[data["overall"] == 5][0:neg.shape[0]]
 
-    # print(data["reviewText"])
-    # print(data["overall"])
+    # print(neg["reviewText"])
+    # print(neg["overall"])
 
-    x_train = np.copy(data["reviewText"])
+    x_train = np.copy(neg["reviewText"])
+    x_train = np.append(x_train, np.copy(pos["reviewText"]))
     # 3 -> 0, 4 -> 1
-    y_train = np.round(np.divide(data["overall"], 7))
-
-    df = pd.DataFrame(y_train)
-    # print(df)
-    print(np.divide(df["overall"].value_counts(), 1000.00))  # 2786.77))
+    y_train = np.subtract(neg["overall"], 1)
+    y_train = np.append(y_train, np.subtract(pos["overall"], 4))
+    # print(x_train)
+    # print(y_train)
+    # df = pd.DataFrame(y_train)
+    # print("h")
+    # print(np.divide(df["overall"].value_counts(), 1))  # 2786.77))
     return x_train, y_train
 
 

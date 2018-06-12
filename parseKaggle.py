@@ -3,6 +3,12 @@ import numpy as np
 
 
 def parse_kaggle():
+    """
+        parse kaggle's women's e-commerce clothing reviews data set subset(~25,000 reviews)
+        where positive is 5 star reviews and negative is 1 star reviews.
+        Input is kaggle.csv which contains all reviews(including 1-5 star reviews) and other meta data
+        :return: x_train, y_train
+    """
     data = pd.read_csv("data/kaggle.csv")
     # data = data.dropna()
     data = data[pd.notnull(data['Rating'])]

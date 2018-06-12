@@ -46,7 +46,7 @@ def parse_amazon():
 
 
 def parse_amazon_large():
-    with open('data/amazon-large-pos.json') as json_file:
+    with open('data/amazon-1m-pos.json') as json_file:
         data = json_file.readlines()
         data = list(map(pd.json.loads, data))
 
@@ -54,7 +54,7 @@ def parse_amazon_large():
 
     print("pos loaded")
 
-    with open('data/amazon-large-neg.json') as json_file:
+    with open('data/amazon-1m-neg.json') as json_file:
         data = json_file.readlines()
         data = list(map(pd.json.loads, data))
 

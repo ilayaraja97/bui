@@ -3,17 +3,22 @@ import re
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
-from pandas import json
+import json
 
 from parseAmazon import parse_amazon, parse_amazon_large
+from parseKaggle import parse_kaggle
 
 """
 This file cleans, and embeds the data set. The embedding is done using 50d GloVe model. 
 """
 
-def getGloVeModel(file):
-    # the function opens the pre-trained glove embedding downloaded from stanford - 50 dimentional glove embedding
+
+def get_glove_model(file):
+    """
+    the function opens the pre-trained glove embedding downloaded from stanford - 50 dimensional glove embedding
+    :param:Path to glove file.
+    :return:Embedding index
+    """
     embedding_index = {}
 
     with open(file, 'r', encoding='utf-8') as gloveFile:
@@ -27,9 +32,16 @@ def getGloVeModel(file):
     return embedding_index
 
 
-def compressEmbedding(embedding_index, data):
-    # Maximum length of the sequence is zero
-    MAX_SEQUENCE_LENGTH = 250
+def get_embedding(data):
+    """
+    the pre-trained glove embedding is used to get the embedding index
+    :param:(x_train, y_train)
+    :return:(Vocabulary, (x_train, y_train), embedding_matrix)
+    """
+    embedding_index = get_glove_model('data/glove.6B.50d.txt')
+
+    # get embedding_matrix by pre-processing the data.
+    max_seq_len = 80
 
     # Create an instance of Tokenizer and convert text into sequences so as to pad the sequence
     tokenizer = Tokenizer()
@@ -42,10 +54,10 @@ def compressEmbedding(embedding_index, data):
     print('Example sequence ', sequences[0])
 
     # get a 2D numpy array of input and output
-    x = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
+    x = pad_sequences(sequences, maxlen=max_seq_len)
     y = data[1]
-    EMBEDDING_DIM = 50
-    embedding_matrix = np.zeros((len(word_index) + 1, EMBEDDING_DIM))
+    embedding_dim = 50
+    embedding_matrix = np.zeros((len(word_index) + 1, embedding_dim))
 
     for word, i in word_index.items():
         embedding_vector = embedding_index.get(word)
@@ -53,23 +65,17 @@ def compressEmbedding(embedding_index, data):
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
 
-    # print(len(embedding_matrix), " ", embedding_matrix[word_index.get('and')])
-
     return word_index, (x, y), embedding_matrix
 
 
-def getEmbedding(data):
-    # the pre-trained glove embedding is used to get the embedding index
-    embedding_index = getGloVeModel('data/glove.6B.50d.txt')
-    # get embedding_matrix by preprocessing the data.
-    return compressEmbedding(embedding_index, data)
-
-
-def splitData(data, split_value=0.5):
+def split_data(data, split_value=0.5):
     """"
-    splitData(data, split_value):
+    split_data(data, split_value):
         split the data into a training set and a validation set
         split_value is fraction of samples used for validation set
+    :param:data = x_train, y_train
+    :param:split_value =  fraction of samples used for validation set
+    :return:x_train, y_train, x_val, y_val
     """
 
     indices = np.arange(data[0].shape[0])
@@ -88,6 +94,12 @@ def splitData(data, split_value=0.5):
 
 
 def get_encoded_matrix(vocab, data, max_seq_length):
+    """
+    Encode sentences in data to a sequence which is understandable by neural nets.
+    :param:vocab is a dictionary which has the sequence for each word.
+    If the word in data doesn't exist in vocab a 0 sequence is returned
+    :return:A sequence matrix of the given data is returned
+    """
     ids = np.zeros([len(data), max_seq_length], dtype=int)
     for i, sentence in enumerate(data):
         for j, word in enumerate(re.split("[ !\"#$%&*+,-./:;<=>?@^_`{|}~\t\n']", sentence)):
@@ -102,17 +114,21 @@ def get_encoded_matrix(vocab, data, max_seq_length):
 
 
 def clean_data():
-    x, y = parse_amazon_large()
-    word_index, data, embedding_matrix = getEmbedding((x, y))
+    """
+    Cleans data, takes data from amazon dataset, encodes it and save in a numpy file.
+    :return: void. But data is stored in 5 files in data folder.
+    """
+    x, y = parse_amazon()
+    word_index, data, embedding_matrix = get_embedding((x, y))
     print("loaded")
     # validate with kaggle
     # x1, y1 = parse_kaggle()
     # x1 = get_encoded_matrix(dict(word_index), x1, 250)
-    # word_index2, data2, embedding_matrix2 = getEmbedding((x1, y1))
+    # word_index2, data2, embedding_matrix2 = get_embedding((x1, y1))
     # x_train, y_train, x_val, y_val = data[0], data[1], x1, y1
 
     # validate with amazon
-    x_train, y_train, x_val, y_val = splitData(data, split_value=0.1)
+    x_train, y_train, x_val, y_val = split_data(data, split_value=0.1)
     print("split")
     # print(x_train)
     # print(y_train)

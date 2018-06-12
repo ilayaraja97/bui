@@ -41,7 +41,7 @@ def get_embedding(data):
     embedding_index = get_glove_model('data/glove.6B.50d.txt')
 
     # get embedding_matrix by pre-processing the data.
-    max_seq_len = 80
+    max_seq_len = 250
 
     # Create an instance of Tokenizer and convert text into sequences so as to pad the sequence
     tokenizer = Tokenizer()

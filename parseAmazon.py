@@ -3,6 +3,11 @@ import numpy as np
 
 
 def parse_amazon():
+    """
+    parse amazon data set subset(~200,000 reviews) where positive is 5 star reviews and negative is 1 star reviews.
+    Input is amazon.json which contains all reviews(including 1-5 star reviews) and other meta data
+    :return: x_train, y_train
+    """
     # read the reviews from amazon.json and we get a dataframe
     data = pd.read_json("data/amazon.json", lines=True)
 
@@ -46,6 +51,12 @@ def parse_amazon():
 
 
 def parse_amazon_large():
+    """
+        parse amazon data(~20,000,000 reviews) where positive is 5 star reviews and negative is 1 star reviews.
+        Input is slightly preprocessed amazon data in form of amazon-1m-pos.json which is 1 million positive reviews and
+        amazon-1m-neg.json which is 1m negative reviews.
+        :return: x_train, y_train,
+    """
     with open('data/amazon-1m-pos.json') as json_file:
         data = json_file.readlines()
         data = list(map(pd.json.loads, data))

@@ -40,10 +40,38 @@ def parse_amazon():
     # # print(df.describe())
     # print(np.divide(df[0].value_counts(), 1))  # 2786.77))
 
-    print(x_train)
-    print(y_train)
+    # print(x_train)
+    # print(y_train)
     return x_train, y_train
 
+
+def parse_amazon_large():
+    with open('data/amazon-large-pos.json') as json_file:
+        data = json_file.readlines()
+        data = list(map(pd.json.loads, data))
+
+    pos = pd.DataFrame(data)
+
+    print("pos loaded")
+
+    with open('data/amazon-large-neg.json') as json_file:
+        data = json_file.readlines()
+        data = list(map(pd.json.loads, data))
+
+    neg = pd.DataFrame(data)
+
+    print("neg loaded")
+    # pos = pd.read_json("data/amazon-large-pos.json", lines=True)
+    # neg = pd.read_json("data/amazon-large-neg.json", lines=True)
+
+    # parse it into numpy array and store the reviewText in x_train and the rating in y_train
+    x_train = np.copy(neg["reviewText"])
+    x_train = np.append(x_train, np.copy(pos["reviewText"]))
+    print("over")
+    y_train = np.subtract(neg["overall"], 1)
+    y_train = np.append(y_train, np.subtract(pos["overall"], 4))
+
+    return x_train, y_train
 
 def main():
     parse_amazon()

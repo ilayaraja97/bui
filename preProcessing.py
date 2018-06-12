@@ -4,7 +4,13 @@ import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
+from pandas import json
 
+from parseAmazon import parse_amazon, parse_amazon_large
+
+"""
+This file cleans, and embeds the data set. The embedding is done using 50d GloVe model. 
+"""
 
 def getGloVeModel(file):
     # the function opens the pre-trained glove embedding downloaded from stanford - 50 dimentional glove embedding
@@ -93,3 +99,37 @@ def get_encoded_matrix(vocab, data, max_seq_length):
             else:
                 ids[i][j] = 0
     return ids
+
+
+def clean_data():
+    x, y = parse_amazon_large()
+    word_index, data, embedding_matrix = getEmbedding((x, y))
+    print("loaded")
+    # validate with kaggle
+    # x1, y1 = parse_kaggle()
+    # x1 = get_encoded_matrix(dict(word_index), x1, 250)
+    # word_index2, data2, embedding_matrix2 = getEmbedding((x1, y1))
+    # x_train, y_train, x_val, y_val = data[0], data[1], x1, y1
+
+    # validate with amazon
+    x_train, y_train, x_val, y_val = splitData(data, split_value=0.1)
+    print("split")
+    # print(x_train)
+    # print(y_train)
+    # print(x_val)
+    # print(y_val)
+    with open('data/word_index.json', "w") as outf:
+        json.dump(word_index, outf)
+    np.save('data/embedding_matrix', embedding_matrix)
+    np.save('data/x_train', x_train)
+    np.save('data/y_train', y_train)
+    np.save('data/x_val', x_val)
+    np.save('data/y_val', y_val)
+
+
+def main():
+    clean_data()
+
+
+if __name__ == "__main__":
+    main()

@@ -30,8 +30,8 @@ def parse_kaggle():
     y_train = np.subtract(neg["Rating"], 1)
     y_train = np.append(y_train, np.subtract(pos["Rating"], 4))
 
-    print(x_train)
-    print(y_train)
+    # print(x_train)
+    # print(y_train)
 
     # print(x_train.shape)
     # print(y_train.shape)

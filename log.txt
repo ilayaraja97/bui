@@ -336,7 +336,7 @@ Epoch 38/50
 Epoch 39/50
  - 291s - loss: 0.1126 - acc: 0.9543 - val_loss: 0.1789 - val_acc: 0.9388
 Epoch 40/50
- - 289s - loss: 0.1637 - acc: 0.9332 - val_loss: 0.2635 - val_acc: 0.8865
+ - 289s - loss: 0.1637 - acc: 0.9332 - val_loss: 0.2635 - val_acc: 0.9327
 Epoch 41/50
  - 289s - loss: 0.1722 - acc: 0.9306 - val_loss: 0.2095 - val_acc: 0.9227
 Epoch 42/50
@@ -378,4 +378,137 @@ Epoch 50/50
 2238/2238 [==============================] - 10s 4ms/step
 Test score: 0.19619341092092635
 Test accuracy: 0.9387846291864206
+Saved model to disk
+
+
+Loading data...
+x_train shape: (20146, 250)
+x_test shape: (2238, 250)
+y_train shape: (20146,)
+y_test shape: (2238,)
+word vector dimension 50
+Build CNN model...
+Train CNN...
+Train on 20146 samples, validate on 2238 samples
+Epoch 1/50
+ - 62s - loss: 0.5418 - acc: 0.7182 - val_loss: 0.3149 - val_acc: 0.8789
+Epoch 2/50
+ - 67s - loss: 0.3211 - acc: 0.8635 - val_loss: 0.2395 - val_acc: 0.9075
+Epoch 3/50
+ - 67s - loss: 0.2560 - acc: 0.8920 - val_loss: 0.2129 - val_acc: 0.9106
+Epoch 4/50
+ - 67s - loss: 0.2243 - acc: 0.9094 - val_loss: 0.2476 - val_acc: 0.9030
+Epoch 5/50
+ - 68s - loss: 0.2018 - acc: 0.9188 - val_loss: 0.2048 - val_acc: 0.9218
+Epoch 6/50
+ - 67s - loss: 0.1903 - acc: 0.9229 - val_loss: 0.2281 - val_acc: 0.9223
+Epoch 7/50
+ - 67s - loss: 0.1633 - acc: 0.9359 - val_loss: 0.2116 - val_acc: 0.9223
+Epoch 8/50
+ - 67s - loss: 0.1553 - acc: 0.9411 - val_loss: 0.2069 - val_acc: 0.9285
+Epoch 9/50
+ - 67s - loss: 0.1394 - acc: 0.9464 - val_loss: 0.2282 - val_acc: 0.9205
+Epoch 10/50
+ - 67s - loss: 0.1415 - acc: 0.9448 - val_loss: 0.1944 - val_acc: 0.9303
+Epoch 11/50
+ - 67s - loss: 0.1269 - acc: 0.9492 - val_loss: 0.2067 - val_acc: 0.9312
+Epoch 12/50
+ - 67s - loss: 0.1304 - acc: 0.9490 - val_loss: 0.2645 - val_acc: 0.9106
+Epoch 13/50
+ - 68s - loss: 0.1113 - acc: 0.9577 - val_loss: 0.2266 - val_acc: 0.9223
+Epoch 14/50
+ - 67s - loss: 0.1060 - acc: 0.9587 - val_loss: 0.2174 - val_acc: 0.9307
+Epoch 15/50
+ - 67s - loss: 0.1082 - acc: 0.9589 - val_loss: 0.2286 - val_acc: 0.9240
+Epoch 16/50
+ - 67s - loss: 0.1049 - acc: 0.9584 - val_loss: 0.2157 - val_acc: 0.9303
+Epoch 17/50
+ - 67s - loss: 0.0971 - acc: 0.9624 - val_loss: 0.2260 - val_acc: 0.9312
+Epoch 18/50
+ - 67s - loss: 0.1009 - acc: 0.9596 - val_loss: 0.2218 - val_acc: 0.9303
+Epoch 19/50
+ - 67s - loss: 0.0910 - acc: 0.9655 - val_loss: 0.2673 - val_acc: 0.9164
+Epoch 20/50
+ - 67s - loss: 0.0876 - acc: 0.9673 - val_loss: 0.2493 - val_acc: 0.9316
+Epoch 21/50
+ - 67s - loss: 0.0739 - acc: 0.9728 - val_loss: 0.3008 - val_acc: 0.9133
+Epoch 22/50
+ - 67s - loss: 0.0829 - acc: 0.9677 - val_loss: 0.2382 - val_acc: 0.9312
+Epoch 23/50
+ - 67s - loss: 0.0791 - acc: 0.9685 - val_loss: 0.2348 - val_acc: 0.9339
+Epoch 24/50
+ - 67s - loss: 0.0815 - acc: 0.9690 - val_loss: 0.2343 - val_acc: 0.9307
+Epoch 25/50
+ - 67s - loss: 0.0701 - acc: 0.9734 - val_loss: 0.2520 - val_acc: 0.9290
+Epoch 26/50
+ - 67s - loss: 0.0680 - acc: 0.9750 - val_loss: 0.2681 - val_acc: 0.9272
+Epoch 27/50
+ - 67s - loss: 0.0660 - acc: 0.9756 - val_loss: 0.2553 - val_acc: 0.9325
+Epoch 28/50
+ - 67s - loss: 0.0651 - acc: 0.9757 - val_loss: 0.2886 - val_acc: 0.9236
+Epoch 29/50
+ - 67s - loss: 0.0676 - acc: 0.9734 - val_loss: 0.2790 - val_acc: 0.9214
+Epoch 30/50
+ - 67s - loss: 0.0679 - acc: 0.9743 - val_loss: 0.2713 - val_acc: 0.9290
+Epoch 31/50
+ - 67s - loss: 0.0575 - acc: 0.9779 - val_loss: 0.2676 - val_acc: 0.9325
+Epoch 32/50
+ - 67s - loss: 0.0584 - acc: 0.9773 - val_loss: 0.2903 - val_acc: 0.9263
+Epoch 33/50
+ - 67s - loss: 0.0717 - acc: 0.9720 - val_loss: 0.2798 - val_acc: 0.9236
+Epoch 34/50
+ - 67s - loss: 0.0621 - acc: 0.9761 - val_loss: 0.2910 - val_acc: 0.9236
+Epoch 35/50
+ - 67s - loss: 0.0593 - acc: 0.9773 - val_loss: 0.2892 - val_acc: 0.9285
+Epoch 36/50
+ - 67s - loss: 0.0575 - acc: 0.9785 - val_loss: 0.2629 - val_acc: 0.9312
+Epoch 37/50
+ - 67s - loss: 0.0693 - acc: 0.9729 - val_loss: 0.2853 - val_acc: 0.9267
+Epoch 38/50
+ - 67s - loss: 0.0553 - acc: 0.9788 - val_loss: 0.2892 - val_acc: 0.9325
+Epoch 39/50
+ - 67s - loss: 0.0608 - acc: 0.9767 - val_loss: 0.3092 - val_acc: 0.9240
+Epoch 40/50
+ - 68s - loss: 0.0551 - acc: 0.9783 - val_loss: 0.2738 - val_acc: 0.9325
+Epoch 41/50
+ - 67s - loss: 0.0583 - acc: 0.9777 - val_loss: 0.2620 - val_acc: 0.9325
+Epoch 42/50
+ - 67s - loss: 0.0546 - acc: 0.9785 - val_loss: 0.2899 - val_acc: 0.9348
+Epoch 43/50
+ - 67s - loss: 0.0524 - acc: 0.9804 - val_loss: 0.2766 - val_acc: 0.9357
+Epoch 44/50
+ - 67s - loss: 0.0551 - acc: 0.9776 - val_loss: 0.2734 - val_acc: 0.9321
+Epoch 45/50
+ - 67s - loss: 0.0493 - acc: 0.9815 - val_loss: 0.2712 - val_acc: 0.9325
+Epoch 46/50
+ - 67s - loss: 0.0502 - acc: 0.9809 - val_loss: 0.2910 - val_acc: 0.9281
+Epoch 47/50
+ - 67s - loss: 0.0554 - acc: 0.9781 - val_loss: 0.2633 - val_acc: 0.9321
+Epoch 48/50
+ - 67s - loss: 0.0481 - acc: 0.9816 - val_loss: 0.2863 - val_acc: 0.9303
+Epoch 49/50
+ - 67s - loss: 0.0492 - acc: 0.9831 - val_loss: 0.2617 - val_acc: 0.9298
+Epoch 50/50
+ - 67s - loss: 0.0572 - acc: 0.9783 - val_loss: 0.2805 - val_acc: 0.9361
+
+ 128/2238 [>.............................] - ETA: 1s
+ 256/2238 [==>...........................] - ETA: 1s
+ 384/2238 [====>.........................] - ETA: 0s
+ 512/2238 [=====>........................] - ETA: 0s
+ 640/2238 [=======>......................] - ETA: 0s
+ 768/2238 [=========>....................] - ETA: 0s
+ 896/2238 [===========>..................] - ETA: 0s
+1024/2238 [============>.................] - ETA: 0s
+1152/2238 [==============>...............] - ETA: 0s
+1280/2238 [================>.............] - ETA: 0s
+1408/2238 [=================>............] - ETA: 0s
+1536/2238 [===================>..........] - ETA: 0s
+1664/2238 [=====================>........] - ETA: 0s
+1792/2238 [=======================>......] - ETA: 0s
+1920/2238 [========================>.....] - ETA: 0s
+2048/2238 [==========================>...] - ETA: 0s
+2176/2238 [============================>.] - ETA: 0s
+2238/2238 [==============================] - 1s 533us/step
+Test score: 0.28049310839421204
+Test accuracy: 0.9361036640389675
 Saved model to disk

@@ -1,6 +1,6 @@
 from keras.preprocessing import sequence
 from keras.models import Sequential
-from keras.layers import Dense, Embedding, SpatialDropout1D, GRU
+from keras.layers import Dense, Embedding, SpatialDropout1D, GRU, Conv1D, GlobalMaxPooling1D, Dropout
 from keras.layers import LSTM
 import numpy as np
 
@@ -26,16 +26,21 @@ print('x_train shape:', x_train.shape)
 print('x_test shape:', x_test.shape)
 print('y_train shape:', y_train.shape)
 print('y_test shape:', y_test.shape)
-print(y_train)
-print('Build model...')
+# print(y_train)
 
 embedding_matrix = np.load("data/embedding_matrix.npy")
 print("word vector dimension", len(embedding_matrix[0]))
+
+print('Build CNN model...')
+
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), len(embedding_matrix[0]), weights=[embedding_matrix], trainable=False,
                     input_length=maxlen))
 model.add(SpatialDropout1D(0.2))
-model.add(GRU(256, dropout=0.2, recurrent_dropout=0.2))
+model.add(Conv1D(256, 3, activation='relu'))
+model.add(GlobalMaxPooling1D())
+model.add(Dense(256, activation='relu'))
+model.add(Dropout(0.2))
 model.add(Dense(1, activation='sigmoid'))
 
 # try using different optimizers and different optimizer configs
@@ -43,14 +48,15 @@ model.compile(loss='binary_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 
-print('Train...')
+print('Train CNN...')
 
 model.fit(x_train, y_train,
           batch_size=batch_size,
-          epochs=5,
-          validation_data=(x_test, y_test))
+          epochs=50,
+          validation_data=(x_test, y_test),
+          verbose=2)
 score, acc = model.evaluate(x_test, y_test,
                             batch_size=batch_size)
 print('Test score:', score)
 print('Test accuracy:', acc)
-save_model(model, index="-amazon-gru")
+save_model(model, index="-amazon-cnn")

@@ -1,11 +1,13 @@
+import getopt
 import re
 
 import numpy as np
+import sys
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 import json
 
-from parseAmazon import parse_amazon, parse_amazon_large
+from parseAmazon import parse_amazon, parse_amazon_large, parse_amazon_medium
 from parseKaggle import parse_kaggle
 
 """
@@ -113,12 +115,20 @@ def get_encoded_matrix(vocab, data, max_seq_length):
     return ids
 
 
-def clean_data():
+def clean_data(size=0):
     """
     Cleans data, takes data from amazon dataset, encodes it and save in a numpy file.
     :return: void. But data is stored in 5 files in data folder.
     """
     x, y = parse_amazon()
+    term = ''
+    if size == 1:
+        x, y = parse_amazon_medium()
+        term = '_500k'
+    elif size == 1:
+        x, y = parse_amazon_large()
+        term = '_1m'
+
     word_index, data, embedding_matrix = get_embedding((x, y))
     print("loaded")
     # validate with kaggle
@@ -134,18 +144,33 @@ def clean_data():
     # print(y_train)
     # print(x_val)
     # print(y_val)
-    with open('data/word_index.json', "w") as outf:
+    with open('data/word_index' + term + '.json', "w") as outf:
         json.dump(word_index, outf)
-    np.save('data/embedding_matrix', embedding_matrix)
-    np.save('data/x_train', x_train)
-    np.save('data/y_train', y_train)
-    np.save('data/x_val', x_val)
-    np.save('data/y_val', y_val)
+    np.save('data/embedding_matrix' + term, embedding_matrix)
+    np.save('data/x_train' + term, x_train)
+    np.save('data/y_train' + term, y_train)
+    np.save('data/x_val' + term, x_val)
+    np.save('data/y_val' + term, y_val)
 
 
-def main():
-    clean_data()
+def main(argv):
+    global opts
+    try:
+        opts, args = getopt.getopt(argv, "hsml")
+    except getopt.GetoptError:
+        print('preProcessing.py -[sml]')
+        sys.exit()
+    for opt, arg in opts:
+        if opt == '-h':
+            print('preProcessing.py -[sml]')
+            sys.exit()
+        if opt == '-s':
+            clean_data(size=0)
+        elif opt == '-m':
+            clean_data(size=1)
+        elif opt == '-l':
+            clean_data(size=2)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

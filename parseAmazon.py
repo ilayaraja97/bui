@@ -50,6 +50,41 @@ def parse_amazon():
     return x_train, y_train
 
 
+def parse_amazon_medium():
+    """
+        parse amazon data(~20,000,000 reviews) where positive is 5 star reviews and negative is 1 star reviews.
+        Input is slightly preprocessed amazon data in form of amazon-1m-pos.json which is 1 million positive reviews and
+        amazon-1m-neg.json which is 1m negative reviews.
+        :return: x_train, y_train,
+    """
+    with open('data/amazon-500k-pos.json') as json_file:
+        data = json_file.readlines()
+        data = list(map(pd.json.loads, data))
+
+    pos = pd.DataFrame(data)
+
+    print("pos loaded")
+
+    with open('data/amazon-500k-neg.json') as json_file:
+        data = json_file.readlines()
+        data = list(map(pd.json.loads, data))
+
+    neg = pd.DataFrame(data)
+
+    print("neg loaded")
+    # pos = pd.read_json("data/amazon-large-pos.json", lines=True)
+    # neg = pd.read_json("data/amazon-large-neg.json", lines=True)
+
+    # parse it into numpy array and store the reviewText in x_train and the rating in y_train
+    x_train = np.copy(neg["reviewText"])
+    x_train = np.append(x_train, np.copy(pos["reviewText"]))
+    print("over")
+    y_train = np.subtract(neg["overall"], 1)
+    y_train = np.append(y_train, np.subtract(pos["overall"], 4))
+
+    return x_train, y_train
+
+
 def parse_amazon_large():
     """
         parse amazon data(~20,000,000 reviews) where positive is 5 star reviews and negative is 1 star reviews.
@@ -83,6 +118,7 @@ def parse_amazon_large():
     y_train = np.append(y_train, np.subtract(pos["overall"], 4))
 
     return x_train, y_train
+
 
 def main():
     parse_amazon()

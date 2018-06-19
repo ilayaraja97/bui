@@ -7,6 +7,8 @@ from keras.layers import Dense, Embedding, SpatialDropout1D, GRU, Conv1D, Global
 from keras.layers import LSTM
 import numpy as np
 
+from keras_contrib.layers.advanced_activations import *
+
 
 def save_model(model, index="", dataset=""):
     model_json = model.to_json()
@@ -17,14 +19,7 @@ def save_model(model, index="", dataset=""):
     print("Saved model to disk")
 
 
-def train(
-        max_features=20000,
-        maxlen=250,  # cut texts after this number of words (among top max_features most common words)
-        batch_size=128,
-        dataset="",
-        modelname="-cnn",
-        epochs=8
-):
+def train(max_features=20000, maxlen=250, batch_size=128, dataset="", modelname="-cnn", epochs=8, activation=""):
     print('Loading data...')
 
     (x_train, y_train), (x_test, y_test) = (np.load("data/x_train" + dataset + ".npy"),
@@ -68,6 +63,17 @@ def train(
                       input_length=maxlen))
         model.add(SpatialDropout1D(0.2))
         model.add(GRU(256, dropout=0.2, recurrent_dropout=0.2))
+        if activation == "act1":
+            model.add(Act1())
+        elif activation == "act2":
+            model.add(Act2())
+        elif activation == "act3":
+            model.add(Act3())
+        elif activation == "act4":
+            model.add(Act4())
+        elif activation == "act5":
+            model.add(Act5())
+
         model.add(Dense(1, activation='sigmoid'))
 
         # try using different optimizers and different optimizer configs
@@ -84,6 +90,18 @@ def train(
                       input_length=maxlen))
         model.add(SpatialDropout1D(0.2))
         model.add(LSTM(256, dropout=0.2, recurrent_dropout=0.2))
+
+        if activation == "act1":
+            model.add(Act1())
+        elif activation == "act2":
+            model.add(Act2())
+        elif activation == "act3":
+            model.add(Act3())
+        elif activation == "act4":
+            model.add(Act4())
+        elif activation == "act5":
+            model.add(Act5())
+
         model.add(Dense(1, activation='sigmoid'))
 
         # try using different optimizers and different optimizer configs
@@ -102,24 +120,25 @@ def train(
                                 batch_size=batch_size)
     print('Test score:', score)
     print('Test accuracy:', acc)
-    save_model(model, index="-amazon" + modelname, dataset=dataset)
+    save_model(model, index="-amazon" + modelname + activation, dataset=dataset)
 
 
 def main(argv):
     global opts
     try:
-        opts, args = getopt.getopt(argv, "ho:smle:")
+        opts, args = getopt.getopt(argv, "ho:smle:a:")
     except getopt.GetoptError:
-        print('train.py -[sml] -e epochs -o model ')
+        print('train.py -[sml] -e epochs -o model -a activation')
         sys.exit()
 
     dataset = ""
     modelname = "-cnn"
     epochs = 8
+    activation = ""
 
     for opt, arg in opts:
         if opt == '-h':
-            print('train.py -[sml] -e epochs -o model ')
+            print('train.py -[sml] -e epochs -o model -a activation')
             sys.exit()
         if opt == '-s':
             dataset = ''
@@ -131,8 +150,10 @@ def main(argv):
             epochs = int(arg)
         if opt == "-o":
             modelname = "-" + str(arg)
+        if opt == "-a":
+            activation = str(arg)
     print("train", modelname[1:], "for", epochs, "epochs on", dataset[1:], "dataset")
-    train(dataset=dataset, epochs=epochs, modelname=modelname)
+    train(dataset=dataset, epochs=epochs, modelname=modelname, activation=activation)
 
 
 if __name__ == "__main__":

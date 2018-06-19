@@ -57,9 +57,9 @@ def test(a, modelname="gru", dataset=""):
 def main(argv):
     global opts
     try:
-        opts, args = getopt.getopt(argv, "kho:sml")
+        opts, args = getopt.getopt(argv, "ki:ho:sml")
     except getopt.GetoptError:
-        print('test.py -[k(i <input>)] -[sml] -o model ')
+        print('test.py -[k(i <input>)] -[sml] -o model+activation ')
         sys.exit()
 
     dataset = ""
@@ -71,7 +71,7 @@ def main(argv):
         if opt == '-i':
             a = str(arg)
         if opt == '-h':
-            print('test.py -[k(i <input>)] -[sml] -o model ')
+            print('test.py -[k(i <input>)] -[sml] -o model+activation ')
             sys.exit()
         if opt == '-s':
             dataset = ''
@@ -83,7 +83,7 @@ def main(argv):
             epochs = int(arg)
         if opt == "-o":
             modelname = "-" + str(arg)
-    print("test", modelname[1:], "for", epochs, "epochs on", dataset[1:], "dataset")
+    # print("test", modelname[1:], "for", epochs, "epochs on", dataset[1:], "dataset")
     test(a, dataset=dataset, modelname=modelname)
 
 

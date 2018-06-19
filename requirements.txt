@@ -2,3 +2,4 @@ numpy
 pandas
 tensorflow
 keras
+git+https://www.github.com/ilayaraja97/keras-contrib.git

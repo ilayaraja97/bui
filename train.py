@@ -13,7 +13,7 @@ def save_model(model, index="", dataset=""):
     with open("data/model" + index + dataset + ".json", "w") as json_file:
         json_file.write(model_json)
     # serialize weights to HDF5
-    model.save_weights("data/model" + index + ".h5")
+    model.save_weights("data/model" + index + dataset + ".h5")
     print("Saved model to disk")
 
 
@@ -97,7 +97,7 @@ def train(
               batch_size=batch_size,
               epochs=epochs,
               validation_data=(x_test, y_test),
-              verbose=1)
+              verbose=2)
     score, acc = model.evaluate(x_test, y_test,
                                 batch_size=batch_size)
     print('Test score:', score)

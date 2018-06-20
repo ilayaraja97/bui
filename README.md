@@ -3,6 +3,7 @@ sentiment analysis in business intelligence
 
 ## Instalation
 `$ sudo apt install python3-pip`
+
 `$ sudo pip3 install -r requirements.txt`
 
 ## Data cleaning

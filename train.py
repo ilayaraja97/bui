@@ -20,6 +20,7 @@ def save_model(model, index="", dataset=""):
 
 
 def train(max_features=20000, maxlen=250, batch_size=128, dataset="", modelname="-cnn", epochs=8, activation=""):
+
     print('Loading data...')
 
     (x_train, y_train), (x_test, y_test) = (np.load("data/x_train" + dataset + ".npy"),

@@ -50,6 +50,8 @@ def test(a, modelname="gru", dataset=""):
             v = round(y[i][0])
             if v == b[i]:
                 c = c + 1
+            else:
+                print(b[i], ", \"", a[i], "\"")
 
         print("Testing accuracy", c / len(y) * 100, "%")
 

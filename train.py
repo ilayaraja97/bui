@@ -1,4 +1,5 @@
 import getopt
+import json
 
 import sys
 from keras.preprocessing import sequence
@@ -9,6 +10,8 @@ import numpy as np
 
 from keras_contrib.layers.advanced_activations import *
 
+from parseKaggle import parse_kaggle
+from preProcessing import get_encoded_matrix
 
 def save_model(model, index="", dataset=""):
     model_json = model.to_json()
@@ -74,6 +77,16 @@ def train(max_features=20000, maxlen=250, batch_size=128, dataset="", modelname=
             model.add(Act4())
         elif activation == "act5":
             model.add(Act5())
+        elif activation == "act8":
+            model.add(Act8())
+        elif activation == "act9":
+            model.add(Act9())
+        elif activation == "act10":
+            model.add(Act10())
+        elif activation == "act11":
+            model.add(Act11())
+        elif activation == "act12":
+            model.add(Act12())
 
         model.add(Dense(1, activation='sigmoid'))
 
@@ -102,6 +115,16 @@ def train(max_features=20000, maxlen=250, batch_size=128, dataset="", modelname=
             model.add(Act4())
         elif activation == "act5":
             model.add(Act5())
+        elif activation == "act8":
+            model.add(Act8())
+        elif activation == "act9":
+            model.add(Act9())
+        elif activation == "act10":
+            model.add(Act10())
+        elif activation == "act11":
+            model.add(Act11())
+        elif activation == "act12":
+            model.add(Act12())
 
         model.add(Dense(1, activation='sigmoid'))
 
@@ -121,7 +144,21 @@ def train(max_features=20000, maxlen=250, batch_size=128, dataset="", modelname=
                                 batch_size=batch_size)
     print('Test score:', score)
     print('Test accuracy:', acc)
-    save_model(model, index="-amazon" + modelname + activation, dataset=dataset)
+    if activation is not "":
+        print ("Testing")
+        a,b = parse_kaggle()
+        with open('data/word_index'+dataset+'.json') as f:
+            word_index = json.load(f)
+        x = get_encoded_matrix(dict(word_index), a, 250)
+        y = model.predict(x,batch_size=1,verbose=1)
+
+        c=0
+        for i in range(len(y)):
+            v = round(y[i][0])
+            if v == b[i]:
+                c=c+1
+        print("Testing accuracy", c/len(y)*100, "%")
+    save_model(model, index="-amazon" + modelname, dataset=dataset)
 
 
 def main(argv):
@@ -153,7 +190,7 @@ def main(argv):
             modelname = "-" + str(arg)
         if opt == "-a":
             activation = str(arg)
-    print("train", modelname[1:], "for", epochs, "epochs on", dataset[1:], "dataset")
+    print("train", modelname[1:], "for", epochs, "epochs on", dataset[1:], "dataset", "activation", activation)
     train(dataset=dataset, epochs=epochs, modelname=modelname, activation=activation)
 
 

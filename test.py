@@ -61,19 +61,20 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "ki:ho:sml")
     except getopt.GetoptError:
-        print('test.py -[k(i <input>)] -[sml] -o model+activation ')
+        print('test.py -[k(i <input>)] -[sml] -o model ')
         sys.exit()
 
     dataset = ""
     modelname = "-cnn"
     epochs = 8
     a = ""
+    activation = ""
 
     for opt, arg in opts:
         if opt == '-i':
             a = str(arg)
         if opt == '-h':
-            print('test.py -[k(i <input>)] -[sml] -o model+activation ')
+            print('test.py -[k(i <input>)] -[sml] -o model ')
             sys.exit()
         if opt == '-s':
             dataset = ''
@@ -85,8 +86,10 @@ def main(argv):
             epochs = int(arg)
         if opt == "-o":
             modelname = "-" + str(arg)
+        if opt == "-a":
+            activation = "/" + str(arg)
     # print("test", modelname[1:], "for", epochs, "epochs on", dataset[1:], "dataset")
-    test(a, dataset=dataset, modelname=modelname)
+    test(a, dataset=dataset, modelname=modelname, activation=activation)
 
 
 if __name__ == "__main__":

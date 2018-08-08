@@ -1,6 +1,10 @@
 # bui
 sentiment analysis in business intelligence
 
+
+# authors
+S Ilayaraja & Himani Rathi 
+
 ## Instalation
     $ sudo apt install python3-pip
     $ sudo pip3 install -r requirements.txt
